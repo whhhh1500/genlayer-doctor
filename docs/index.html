@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>genlayer-doctor: check GenLayer contracts and explain transactions</title>
+  <meta name="description" content="Paste a GenLayer Intelligent Contract for a header lint and a gasless dry run on Studio, or paste a transaction hash to see whether it really executed.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩺</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🩺 genlayer-doctor <small id="ver"></small></h1>
+    <p>Pre-deploy checks and “did my transaction <em>really</em> succeed?” diagnostics for GenLayer Intelligent Contracts.
+      Runs entirely in your browser against the network's JSON-RPC. No wallet, no gas.
+      <a href="https://github.com/whhhh1500/genlayer-doctor">CLI &amp; source</a></p>
+    <label class="net">Network
+      <select id="net">
+        <option value="studionet">studionet (hosted Studio)</option>
+        <option value="localnet">localnet (http://127.0.0.1:4000/api)</option>
+        <option value="custom">custom RPC…</option>
+      </select>
+    </label>
+    <label class="net" id="custom-wrap" hidden>RPC URL <input id="custom" type="url" placeholder="https://…/api"></label>
+  </header>
+
+  <main>
+    <div class="tabs" role="tablist" aria-label="Mode">
+      <button role="tab" id="tab-check" aria-controls="panel-check" aria-selected="true">Check a contract</button>
+      <button role="tab" id="tab-tx" aria-controls="panel-tx" aria-selected="false" tabindex="-1">Explain a transaction</button>
+    </div>
+
+    <section role="tabpanel" id="panel-check" aria-labelledby="tab-check">
+      <p class="lead">Header lint (GLD001–008) and a <strong>gasless dry run</strong>: the node loads your contract with <code>gen_getContractSchemaForCode</code> and either returns its ABI or the GenVM error, which is decoded into a readable cause.</p>
+      <div class="row">
+        <span>Examples:</span>
+        <button class="chip" data-ex="bad_floating_runner.py">floating <code>:test</code> runner</button>
+        <button class="chip" data-ex="bad_import.py">unavailable import</button>
+        <button class="chip" data-ex="hello_ok.py">healthy contract</button>
+      </div>
+      <label for="src" class="sr-only">Contract source</label>
+      <textarea id="src" spellcheck="false" placeholder="# { &quot;Depends&quot;: &quot;py-genlayer:…&quot; }&#10;from genlayer import *&#10;…"></textarea>
+      <div class="row">
+        <button id="run-check" class="primary">Check (lint + dry run)</button>
+        <button id="run-lint">Lint only (offline)</button>
+        <button id="run-fix">Fix header</button>
+      </div>
+      <div id="check-out" class="out" aria-live="polite"></div>
+    </section>
+
+    <section role="tabpanel" id="panel-tx" aria-labelledby="tab-tx" hidden>
+      <p class="lead">A transaction can be <code>FINALIZED / MAJORITY_AGREE</code> and still have done nothing: consensus means the validators agreed on the outcome, even when the outcome was an error. Paste a hash to see the execution result, decoded return/revert payload, votes and the deployed header.</p>
+      <div class="row">
+        <span>Examples:</span>
+        <button class="chip" data-tx="0xd15bd2fc942f5b405de13ec68f5060af08fc20a3548ea4d356292e0ac51afb2d">“successful” deploy that is broken</button>
+        <button class="chip" data-tx="0xb5f63c7f34f5ac927b2c3b0b50f8637e30e9f34ad975549f240f55bc9b3adbf3">accepted call that reverted</button>
+        <button class="chip" data-tx="0x00a68370d4b664a341824702fdc42e9125f4ee3b97f2b5c2d388d22e7a6c42fd">real success</button>
+      </div>
+      <form id="tx-form" class="row">
+        <label for="tx" class="sr-only">Transaction hash</label>
+        <input id="tx" placeholder="0x… transaction hash" pattern="0x[0-9a-fA-F]{64}" required>
+        <button class="primary" type="submit">Explain</button>
+      </form>
+      <div id="tx-out" class="out" aria-live="polite"></div>
+    </section>
+  </main>
+  <footer>Same finding codes as the <code>gldoctor</code> CLI (<code>pip install git+https://github.com/whhhh1500/genlayer-doctor</code>). MIT.</footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

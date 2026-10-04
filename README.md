@@ -10,6 +10,16 @@
 
 It has zero runtime dependencies (Python ≥ 3.10, stdlib only) and works with Studio (hosted or local) and GLSim. It complements [`genvm-linter`](https://pypi.org/project/genvm-linter/) and does not replace it.
 
+### Web UI: **https://whhhh1500.github.io/genlayer-doctor/**
+
+The same checks run in the browser, with no install, wallet or gas:
+- **Check a contract**: paste the source to get the header lint plus a gasless dry run on Studio, which returns the ABI or a decoded GenVM error with its traceback. *Fix header* pins the runner.
+- **Explain a transaction**: paste a hash to see the consensus status next to the real execution result, the decoded return/revert payload, the votes, emitted transfers and the deployed header. Results are shareable as deep links, e.g. [`#tx=0xd15b…&net=studionet`](https://whhhh1500.github.io/genlayer-doctor/#tx=0xd15bd2fc942f5b405de13ec68f5060af08fc20a3548ea4d356292e0ac51afb2d&net=studionet).
+
+It is a dependency-free ES module ([`docs/gldoctor.js`](docs/gldoctor.js)) that uses the same finding codes as the CLI. Parity tests run it against the CLI's recorded Studio fixtures (`node --test tests/js/`).
+
+![web UI: explain](media/web-explain.png)
+
 ---
 
 ## Why
@@ -27,7 +37,7 @@ Consensus means the validators **agreed on the outcome**, even when the outcome 
 
 ```
 $ gldoctor check --network studionet contracts/*.py
-gldoctor 0.1.0 · dry run on https://studio.genlayer.com/api
+gldoctor 0.2.0 · dry run on https://studio.genlayer.com/api
 FAIL contracts/bad_floating_runner.py
   error GLD004 contracts/bad_floating_runner.py:1: Runner "py-genlayer:test" uses the floating ref ":test". GenVM rejects :test/:latest outside debug mode (Studio, testnets): the deploy is ACCEPTED/FINALIZED but execution fails with `invalid_contract`.
         hint: Pin a runner hash, e.g. py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6 (`gldoctor fix --write`).
@@ -124,7 +134,7 @@ Lists studionet, localnet, testnet-asimov and testnet-bradbury with their RPC UR
 **pre-commit**
 ```yaml
 - repo: https://github.com/whhhh1500/genlayer-doctor
-  rev: v0.1.0
+  rev: v0.2.0
   hooks:
     - id: gldoctor          # offline
     # - id: gldoctor-studio # gasless dry run on studionet (needs network)
@@ -132,7 +142,7 @@ Lists studionet, localnet, testnet-asimov and testnet-bradbury with their RPC UR
 
 **GitHub Actions**
 ```yaml
-- uses: whhhh1500/genlayer-doctor@v0.1.0
+- uses: whhhh1500/genlayer-doctor@v0.2.0
   with:
     files: contracts/*.py
     network: studionet   # optional; omit for offline checks
@@ -153,12 +163,18 @@ Lists studionet, localnet, testnet-asimov and testnet-bradbury with their RPC UR
 GENLAYER_MNEMONIC_FILE=~/path/to/mnemonic.txt python examples/demo_studio.py   # or GENLAYER_PRIVATE_KEY=0x...
 ```
 
+## Used by
+
+- [AccessBond](https://github.com/whhhh1500/accessbond), an accessibility bounty escrow on GenLayer. Every deploy and write in its recorded Studio run was verified with `gldoctor explain`. One example: an `ACCEPTED / MAJORITY_AGREE` `finalize` that actually reverted with `challenge window still open` ([see it in the web UI](https://whhhh1500.github.io/genlayer-doctor/#tx=0xb5f63c7f34f5ac927b2c3b0b50f8637e30e9f34ad975549f240f55bc9b3adbf3&net=studionet)).
+
 ## Development
 
 ```bash
 pip install -e ".[test]"
 pytest                          # offline: recorded Studio responses in tests/fixtures
 GLDOCTOR_LIVE=1 pytest -m live  # hits studio.genlayer.com
+node --test tests/js/           # browser port (docs/gldoctor.js) against the same fixtures
+python -m http.server -d docs   # web UI on http://localhost:8000 (Studio allows browser CORS)
 ```
 
 The fixtures are real Studio JSON-RPC responses (validator `node_config` stripped). `examples/contracts/` holds one contract per failure mode.

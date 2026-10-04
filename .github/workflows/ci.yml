@@ -22,3 +22,10 @@ jobs:
         with: { python-version: "3.12" }
       - run: pip install -e ".[test]"
       - run: GLDOCTOR_LIVE=1 pytest -q -m live
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node --test tests/js/
