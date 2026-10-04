@@ -61,7 +61,7 @@ FAILED  deploy tx 0xd15bd2fc…afb2d
 ## Install
 
 ```bash
-pip install git+https://github.com/<owner>/genlayer-doctor   # or: pip install -e . from a clone
+pip install git+https://github.com/whhhh1500/genlayer-doctor   # or: pip install -e . from a clone
 gldoctor --help
 ```
 
@@ -123,7 +123,7 @@ Lists studionet, localnet, testnet-asimov and testnet-bradbury with their RPC UR
 
 **pre-commit**
 ```yaml
-- repo: https://github.com/<owner>/genlayer-doctor
+- repo: https://github.com/whhhh1500/genlayer-doctor
   rev: v0.1.0
   hooks:
     - id: gldoctor          # offline
@@ -132,7 +132,7 @@ Lists studionet, localnet, testnet-asimov and testnet-bradbury with their RPC UR
 
 **GitHub Actions**
 ```yaml
-- uses: <owner>/genlayer-doctor@v0.1.0
+- uses: whhhh1500/genlayer-doctor@v0.1.0
   with:
     files: contracts/*.py
     network: studionet   # optional; omit for offline checks
