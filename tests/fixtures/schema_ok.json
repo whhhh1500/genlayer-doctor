@@ -1,0 +1,47 @@
+{
+ "jsonrpc": "2.0",
+ "result": {
+  "ctor": {
+   "params": [
+    [
+     "greeting",
+     "string"
+    ]
+   ],
+   "kwparams": {}
+  },
+  "methods": {
+   "get_greeting": {
+    "params": [],
+    "kwparams": {},
+    "readonly": true,
+    "ret": "string"
+   },
+   "get_owner": {
+    "params": [],
+    "kwparams": {},
+    "readonly": true,
+    "ret": "string"
+   },
+   "get_updates": {
+    "params": [],
+    "kwparams": {},
+    "readonly": true,
+    "ret": "int"
+   },
+   "set_greeting": {
+    "params": [
+     [
+      "new_greeting",
+      "string"
+     ]
+    ],
+    "kwparams": {},
+    "readonly": false,
+    "ret": "null",
+    "payable": false
+   }
+  }
+ },
+ "id": 1
+}

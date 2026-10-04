@@ -1,0 +1,8 @@
+{
+ "jsonrpc": "2.0",
+ "error": {
+  "code": -32603,
+  "message": "('execution failed', {'stdout': '', 'stderr': 'Traceback (most recent call last):\\n  File \"/py/libs/_genlayer_runner.py\", line 180, in <module>\\n    _handle_main()\\n    ~~~~~~~~~~~~^^\\n  File \"/py/libs/_genlayer_runner.py\", line 149, in _handle_main\\n    import contract as _user_contract_module  # type: ignore\\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \"/contract.py\", line 18\\n    def get_greeting(self) -> str\\n                                 ^\\nSyntaxError: expected \\':\\'\\n', 'genvm_log': [{'ts': '1791101203533', 'target': 'genvm_common', 'message': 'logging initialized', 'version': 'v0.2.16-x86_64-linux-release', 'file': 'common/src/lib.rs:75', 'level': 'info'}, {'ts': '1791101203534', 'target': 'genvm::exe::run', 'message': 'genvm id', 'genvm_id': '2899', 'file': 'src/exe/run.rs:172', 'level': 'info'}, {'ts': '1791101203538', 'target': 'genvm::runners::parse', 'message': 'runner comment does not start with version, using default', 'default': 'v0.1.0', 'file': 'src/runners/parse.rs:88', 'level': 'warn'}, {'ts': '1791101203811', 'target': 'genvm', 'message': 'metrics', 'metrics': {'gvm': {'hosts': [{'time': 1583}, {'time': 0}], 'llm_module': {'calls': 0, 'time': 0}, 'supervisor': {'compilation_time': 0, 'compiled_modules': 0, 'precompile_hits': 2}, 'web_module': {'calls': 0, 'time': 0}}, 'llm': None, 'web': None}, 'file': 'src/lib.rs:260', 'level': 'info'}], 'result': '{\"kind\": \"VM_ERROR\", \"message\": \"exit_code 1\"}'})"
+ },
+ "id": 1
+}

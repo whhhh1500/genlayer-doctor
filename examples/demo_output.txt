@@ -1,0 +1,52 @@
+deployer: 0xc7AC1469a8dc7E4df3CE2D646dd6D01296548CEd
+
+=== 1. deploy with py-genlayer:test -> explain ===
+{
+  "verdict": "FAILED",
+  "status": "ACCEPTED",
+  "result_name": "MAJORITY_AGREE",
+  "leader_execution": "ERROR",
+  "result": "vm_error: invalid_contract",
+  "contract": "0xFFE94996b88F3e2ea27628622BC0A964a2d1e4Aa",
+  "findings": [
+    "GLD101 error: Status is ACCEPTED / MAJORITY_AGREE, but the leader's execution result is ERROR (vm_error: invalid_contract). Consensus only means validators agreed on the outcome \u2014 the outcome was an error.",
+    "GLD004 error: deployed code: Runner \"py-genlayer:test\" uses the floating ref \":test\". GenVM rejects :test/:latest outside debug mode (Studio, testnets): the deploy is FINALIZED but execution fails with `invalid_contract`."
+  ]
+}
+
+=== 2. gldoctor check --network studionet (gasless dry run) ===
+[
+  "GLD004 error: Runner \"py-genlayer:test\" uses the floating ref \":test\". GenVM rejects :test/:latest outside debug mode (Studio, testnets): the deploy is FINALIZED but execution fails with `invalid_contract`.",
+  "GLD004 error: Dry run on node failed: The runner header uses py-genlayer:test or :latest, which GenVM only accepts in debug mode. Pin a runner hash."
+]
+
+=== 3. fixed header -> deploy -> explain ===
+{
+  "verdict": "OK",
+  "status": "ACCEPTED",
+  "result_name": "MAJORITY_AGREE",
+  "leader_execution": "SUCCESS",
+  "result": "return: null",
+  "contract": "0x137881b396C7FA0115C1DCe81C50E7a5d53AFcB2",
+  "findings": []
+}
+
+=== 4. write set_greeting -> explain ===
+{
+  "verdict": "OK",
+  "status": "ACCEPTED",
+  "result_name": "MAJORITY_AGREE",
+  "leader_execution": "SUCCESS",
+  "result": "return: null",
+  "contract": "",
+  "findings": []
+}
+
+=== 5. read back ===
+{
+  "get_greeting": "checked by gldoctor before deploy",
+  "get_updates": 1,
+  "get_owner": "0xc7AC1469a8dc7E4df3CE2D646dd6D01296548CEd"
+}
+
+saved /workspace/earn/airdrop/genlayer/contrib/genlayer-doctor/examples/demo_result.json

@@ -1,0 +1,42 @@
+{
+  "deployer": "0xc7AC1469a8dc7E4df3CE2D646dd6D01296548CEd",
+  "broken_deploy": {
+    "tx": "0xd15bd2fc942f5b405de13ec68f5060af08fc20a3548ea4d356292e0ac51afb2d",
+    "verdict": "FAILED",
+    "status": "ACCEPTED",
+    "result_name": "MAJORITY_AGREE",
+    "leader_execution": "ERROR",
+    "result": "vm_error: invalid_contract",
+    "contract": "0xFFE94996b88F3e2ea27628622BC0A964a2d1e4Aa",
+    "findings": [
+      "GLD101 error: Status is ACCEPTED / MAJORITY_AGREE, but the leader's execution result is ERROR (vm_error: invalid_contract). Consensus only means validators agreed on the outcome \u2014 the outcome was an error.",
+      "GLD004 error: deployed code: Runner \"py-genlayer:test\" uses the floating ref \":test\". GenVM rejects :test/:latest outside debug mode (Studio, testnets): the deploy is FINALIZED but execution fails with `invalid_contract`."
+    ]
+  },
+  "fixed_deploy": {
+    "tx": "0x07e7020b20d8dd6a92e224964df8fe2c8647e8bdec82a9baa8a6e5e6fe18195a",
+    "verdict": "OK",
+    "status": "ACCEPTED",
+    "result_name": "MAJORITY_AGREE",
+    "leader_execution": "SUCCESS",
+    "result": "return: null",
+    "contract": "0x137881b396C7FA0115C1DCe81C50E7a5d53AFcB2",
+    "findings": []
+  },
+  "write": {
+    "tx": "0x3ce95ee7df48c041b7260b3442034d556f2d0da2a85fb425f9442fef9ac8bd87",
+    "verdict": "OK",
+    "status": "ACCEPTED",
+    "result_name": "MAJORITY_AGREE",
+    "leader_execution": "SUCCESS",
+    "result": "return: null",
+    "contract": "",
+    "findings": []
+  },
+  "reads": {
+    "get_greeting": "checked by gldoctor before deploy",
+    "get_updates": 1,
+    "get_owner": "0xc7AC1469a8dc7E4df3CE2D646dd6D01296548CEd"
+  },
+  "explorer": "https://explorer-studio.genlayer.com/address/0x137881b396C7FA0115C1DCe81C50E7a5d53AFcB2"
+}

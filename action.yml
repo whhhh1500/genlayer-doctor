@@ -1,0 +1,26 @@
+name: genlayer-doctor
+description: Pre-deploy checks (runner header lint + gasless dry run) for GenLayer Intelligent Contracts
+branding: { icon: check-circle, color: purple }
+inputs:
+  files:
+    description: Contract files / globs to check
+    default: contracts/*.py
+  network:
+    description: "Network for the gasless dry run (studionet, localnet). Empty = offline checks only."
+    default: ""
+  strict:
+    description: Fail on warnings too
+    default: "false"
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with: { python-version: "3.12" }
+    - shell: bash
+      run: pip install "${{ github.action_path }}"
+    - shell: bash
+      run: |
+        args=()
+        [ -n "${{ inputs.network }}" ] && args+=(--network "${{ inputs.network }}")
+        [ "${{ inputs.strict }}" = "true" ] && args+=(--strict)
+        gldoctor check "${args[@]}" ${{ inputs.files }}

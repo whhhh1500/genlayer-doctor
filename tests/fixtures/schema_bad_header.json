@@ -1,0 +1,8 @@
+{
+ "jsonrpc": "2.0",
+ "error": {
+  "code": -32603,
+  "message": "('execution failed', {'stdout': '', 'stderr': '', 'genvm_log': [{'ts': '1791101202493', 'target': 'genvm_common', 'message': 'logging initialized', 'version': 'v0.2.16-x86_64-linux-release', 'file': 'common/src/lib.rs:75', 'level': 'info'}, {'ts': '1791101202493', 'target': 'genvm::exe::run', 'message': 'genvm id', 'genvm_id': '6569', 'file': 'src/exe/run.rs:172', 'level': 'info'}, {'ts': '1791101202500', 'target': 'genvm::runners::parse', 'message': 'runner comment does not start with version, using default', 'default': 'v0.1.0', 'file': 'src/runners/parse.rs:88', 'level': 'warn'}, {'ts': '1791101202500', 'target': 'genvm::rt::supervisor::actions', 'message': ':test/ :latest runner used in non-debug mode, this is not allowed', 'file': 'src/rt/supervisor/actions.rs:74', 'level': 'warn'}, {'ts': '1791101202501', 'target': 'genvm::rt::errors', 'message': 'no backtrace attached', 'file': 'src/rt/errors.rs:92', 'level': 'warn'}, {'ts': '1791101202501', 'target': 'genvm::rt::errors', 'message': 'no memories attached', 'file': 'src/rt/errors.rs:97', 'level': 'warn'}, {'ts': '1791101202501', 'target': 'genvm', 'message': 'metrics', 'metrics': {'gvm': {'hosts': [{'time': 2991}, {'time': 0}], 'llm_module': {'calls': 0, 'time': 0}, 'supervisor': {'compilation_time': 0, 'compiled_modules': 0, 'precompile_hits': 0}, 'web_module': {'calls': 0, 'time': 0}}, 'llm': None, 'web': None}, 'file': 'src/lib.rs:260', 'level': 'info'}], 'result': '{\"kind\": \"VM_ERROR\", \"message\": \"invalid_contract\"}'})"
+ },
+ "id": 1
+}

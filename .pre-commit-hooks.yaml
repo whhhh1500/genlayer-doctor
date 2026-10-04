@@ -1,0 +1,10 @@
+- id: gldoctor
+  name: gldoctor (GenLayer contract checks, offline)
+  entry: gldoctor check --offline
+  language: python
+  files: ^contracts/.*\.py$
+- id: gldoctor-studio
+  name: gldoctor (gasless dry run on GenLayer Studio)
+  entry: gldoctor check --network studionet
+  language: python
+  files: ^contracts/.*\.py$
